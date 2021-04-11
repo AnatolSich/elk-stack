@@ -38,11 +38,26 @@ public class Controller {
 
     @GetMapping("/search")
     public List<Event> search(@RequestParam("query") String query) throws Exception {
+        if(query.isEmpty()) {
+            return esService.searchAll();
+        }
         return esService.search(query);
     }
 
     @PutMapping("/index")
     public void createNewIndex(@RequestParam("indexName") String indexName) throws Exception {
         esService.createNewIndex(indexName);
+    }
+
+    @PutMapping("/mapping")
+    public void applyNewMapping(@RequestParam("property") String property, @RequestParam("type") String type) throws Exception {
+        esService.applyNewMapping(property, type);
+    }
+
+    @PutMapping("/store")
+    public String storeEvent(@RequestBody Event event) throws IOException {
+        String id = UUID.randomUUID().toString();
+        esService.storeEvent(event);
+        return id;
     }
 }
