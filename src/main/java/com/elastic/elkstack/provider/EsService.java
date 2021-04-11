@@ -25,7 +25,7 @@ public interface EsService {
 
     List<Event> searchBy(String title)throws IOException;
 
-    List<Event> searchBy(LocalDate afterDate, String name)throws IOException;
+    List<Event> searchBy(LocalDate afterDate, String title)throws IOException;
 
     List<Event> search(String searchString) throws Exception;
 }

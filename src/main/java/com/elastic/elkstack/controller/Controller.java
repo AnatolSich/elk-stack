@@ -1,11 +1,13 @@
 package com.elastic.elkstack.controller;
 
 import com.elastic.elkstack.domain.Event;
+import com.elastic.elkstack.domain.EventType;
 import com.elastic.elkstack.provider.EsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -59,5 +61,18 @@ public class Controller {
         String id = UUID.randomUUID().toString();
         esService.storeEvent(event);
         return id;
+    }
+
+    @GetMapping("/searchBy")
+    public List<Event> search(@RequestParam("title") String title,
+                              @RequestParam("type") String type,
+                              @RequestParam("afterDate") String afterDate
+                              ) throws Exception {
+        if(title.isEmpty()) {
+            return esService.searchBy(EventType.valueOf(type));
+        } else if(!afterDate.isEmpty()){
+            return esService.searchBy(LocalDate.parse(afterDate), title);
+        }
+        return esService.searchBy(title);
     }
 }

@@ -126,8 +126,8 @@ public class ElasticJavaApiDataProvider implements EsService {
     }
 
     @Override
-    public List<Event> searchBy(LocalDate afterDate, String name) throws IOException  {
-        String queryString = format("datetime > %s AND title:*%s*", serialize(afterDate), name);
+    public List<Event> searchBy(LocalDate afterDate, String title) throws IOException  {
+        String queryString = format("datetime > %s AND title:*%s*", serialize(afterDate), title);
         QueryStringQueryBuilder queryStringQueryBuilder = QueryBuilders.queryStringQuery(queryString);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(queryStringQueryBuilder);
