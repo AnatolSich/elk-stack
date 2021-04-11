@@ -1,0 +1,14 @@
+version: '2'
+services:
+  elk-app:
+    build: .
+    ports:
+      - "8083:8080"
+    links:
+      - elk-stack
+  elk:
+    image: sebp/elk
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
